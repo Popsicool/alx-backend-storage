@@ -10,7 +10,7 @@ from functools import wraps
 rc = redis.Redis()
 
 
-def count_history(method: Callable) -> Callable:
+def call_history(method: Callable) -> Callable:
     '''
     call history
     '''
@@ -75,6 +75,8 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
+    @count_calls
     def store(self, data: Union[bytes, str, float, int]) -> str:
         '''
         store the input data in Redis using the random key
